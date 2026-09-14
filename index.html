@@ -3,97 +3,303 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>F64 — Manual Camera for Android</title>
-<meta name="description" content="F64 is a pure-sensor manual camera app for Android: RAW/DNG capture, manual ISO, shutter, focus and white balance, and manual-settings video.">
+<title>F64 — RAW Manual Camera for Android</title>
+<meta name="description" content="F64 is a manual RAW camera for Android. Shoot DNG stills and cinema Log/HLG video with full ISO, shutter, focus, and Kelvin control. The sensor, not the software.">
+<link rel="canonical" href="https://santhosh-004.github.io/">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://santhosh-004.github.io/">
+<meta property="og:title" content="F64 — RAW Manual Camera for Android">
+<meta property="og:description" content="RAW DNG stills. Cinema Log and HLG video. Full manual ISO, shutter, focus, Kelvin. The sensor, not the software.">
+<meta property="og:image" content="https://santhosh-004.github.io/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="F64 — RAW Manual Camera for Android">
+<meta name="twitter:description" content="Manual RAW camera for Android. DNG stills, cinema Log and HLG video.">
+<meta name="twitter:image" content="https://santhosh-004.github.io/assets/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "F64",
+  "applicationCategory": "PhotographyApplication",
+  "operatingSystem": "Android 10",
+  "description": "Manual RAW camera for Android: DNG stills, cinema Log and HLG video, full ISO, shutter, focus and Kelvin control.",
+  "downloadUrl": "https://play.google.com/store/apps/details?id=com.camera.flash",
+  "installUrl": "https://play.google.com/store/apps/details?id=com.camera.flash",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Person", "name": "Santhosh G" },
+  "url": "https://santhosh-004.github.io/"
+}
+</script>
 <style>
   :root {
-    --bg: #0d0f12;
-    --card: #16191e;
-    --text: #e8eaed;
-    --muted: #9aa0a6;
-    --accent: #8ab4f8;
-    --border: #2a2e35;
+    --bg: #07080a;
+    --bg-2: #101114;
+    --text: #f4efe6;
+    --muted: #9a9386;
+    --gold: #d4a017;
+    --gold-2: #f0d48a;
+    --line: rgba(212, 160, 23, 0.22);
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: Outfit, system-ui, sans-serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
+    line-height: 1.55;
+    font-weight: 400;
   }
-  main { width: 100%; max-width: 560px; }
-  h1 {
-    font-size: 3rem;
-    letter-spacing: 0.05em;
-    margin-bottom: 4px;
+  a { color: var(--gold-2); }
+  img { max-width: 100%; display: block; }
+  .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+
+  header {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 22px;
+    background: rgba(7, 8, 10, 0.78);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
   }
-  .tagline {
-    color: var(--accent);
-    font-size: 1.1rem;
-    margin-bottom: 24px;
+  .wordmark {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.7rem; font-weight: 600; letter-spacing: 0.12em;
+    color: var(--gold-2); text-decoration: none;
   }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 16px;
-  }
-  p.desc { color: var(--muted); margin-bottom: 16px; }
-  ul.features { list-style: none; }
-  ul.features li {
-    padding: 6px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  ul.features li:last-child { border-bottom: none; }
-  ul.features strong { color: var(--text); }
-  ul.features span { color: var(--muted); }
-  a.button {
+  .get {
     display: inline-block;
-    background: var(--accent);
-    color: #0d0f12;
-    font-weight: 600;
-    text-decoration: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    margin-top: 8px;
+    background: var(--gold); color: #140f04;
+    font-weight: 600; font-size: 0.85rem; letter-spacing: 0.04em;
+    text-decoration: none; padding: 10px 16px; border-radius: 999px;
   }
-  a.button:hover { opacity: 0.9; }
+  .get:hover { background: var(--gold-2); }
+
+  .hero {
+    position: relative; min-height: 92vh;
+    display: grid; place-items: center; overflow: hidden;
+  }
+  .hero video, .hero .poster {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; opacity: 0.55;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(7,8,10,.35) 0%, rgba(7,8,10,.55) 45%, rgba(7,8,10,.92) 100%);
+  }
+  .hero-copy {
+    position: relative; z-index: 1; text-align: center;
+    padding: 80px 20px 64px; width: min(760px, 100%);
+  }
+  .kicker {
+    color: var(--gold); letter-spacing: 0.28em; text-transform: uppercase;
+    font-size: 0.72rem; font-weight: 500; margin-bottom: 18px;
+  }
+  h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(5rem, 16vw, 9rem); font-weight: 600;
+    line-height: 0.85; letter-spacing: 0.08em; color: var(--gold-2);
+  }
+  .lede {
+    margin-top: 18px; font-size: clamp(1.3rem, 3vw, 1.85rem);
+    font-weight: 300; color: var(--text);
+  }
+  .sub {
+    margin: 16px auto 28px; max-width: 34rem;
+    color: var(--muted); font-weight: 300;
+  }
+  .badge { height: 64px; margin: 0 auto; }
+  .fine { margin-top: 10px; font-size: 0.8rem; color: var(--muted); }
+
+  .pills {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .pills div {
+    padding: 22px 12px; text-align: center; font-size: 0.86rem;
+    letter-spacing: 0.04em; color: var(--gold-2);
+    border-right: 1px solid var(--line);
+  }
+  .pills div:last-child { border-right: none; }
+  .pills span { display: block; color: var(--muted); font-size: 0.72rem; margin-top: 4px; font-weight: 300; }
+
+  section { padding: 88px 0; }
+  h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 500;
+    line-height: 1.15; max-width: 18ch;
+  }
+  .why p { margin-top: 18px; max-width: 42rem; color: var(--muted); font-size: 1.05rem; font-weight: 300; }
+
+  .features { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 40px; }
+  .card {
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: 18px; padding: 28px;
+  }
+  .card h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 8px; color: var(--gold-2); }
+  .card p { color: var(--muted); font-size: 0.95rem; font-weight: 300; }
+
+  .shots-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 28px; }
+  .shots-row {
+    display: flex; gap: 16px; overflow-x: auto; padding-bottom: 12px;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  }
+  .shots-row img {
+    height: 520px; width: auto; border-radius: 22px;
+    scroll-snap-align: start; border: 1px solid var(--line);
+  }
+
+  details {
+    border-top: 1px solid var(--line); padding: 18px 0;
+  }
+  details:last-of-type { border-bottom: 1px solid var(--line); }
+  summary { cursor: pointer; font-weight: 500; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  details p { margin-top: 10px; color: var(--muted); font-weight: 300; max-width: 40rem; }
+
+  .cta-band {
+    text-align: center; padding: 96px 20px;
+    background: radial-gradient(ellipse at center, rgba(212,160,23,0.12), transparent 60%);
+  }
+  .cta-band h2 { margin: 0 auto 12px; max-width: none; }
+  .cta-band p { color: var(--muted); margin-bottom: 22px; font-weight: 300; }
+
   footer {
-    color: var(--muted);
-    font-size: 0.9rem;
-    text-align: center;
+    border-top: 1px solid var(--line);
+    padding: 28px 22px 40px;
+    display: flex; flex-wrap: wrap; gap: 12px 24px;
+    justify-content: space-between; color: var(--muted); font-size: 0.85rem;
   }
-  footer a { color: var(--accent); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--gold-2); }
+
+  @media (max-width: 800px) {
+    .pills { grid-template-columns: 1fr 1fr; }
+    .pills div:nth-child(2) { border-right: none; }
+    .pills div:nth-child(1), .pills div:nth-child(2) { border-bottom: 1px solid var(--line); }
+    .features { grid-template-columns: 1fr; }
+    .shots-row img { height: 420px; }
+    section { padding: 64px 0; }
+  }
 </style>
 </head>
 <body>
-<main>
-  <h1>F64</h1>
-  <p class="tagline">Unlock the full potential of your mobile camera</p>
+<header>
+  <a class="wordmark" href="/">F64</a>
+  <a class="get" href="https://play.google.com/store/apps/details?id=com.camera.flash">Get on Google Play</a>
+</header>
 
-  <div class="card">
-    <p class="desc">A pure-sensor manual camera for Android. F64 strips away the stock camera's
-    processing pipeline and gives you the sensor's raw output with full manual control.</p>
-    <ul class="features">
-      <li><strong>Photos</strong> <span>— RAW (DNG) capture, or minimal-processing JPEG</span></li>
-      <li><strong>Video</strong> <span>— manual-settings recording, no OEM post-processing</span></li>
-      <li><strong>Controls</strong> <span>— ISO, shutter speed, focus, white balance, flash</span></li>
-      <li><strong>Smart auto</strong> <span>— light- and shake-aware automatic exposure</span></li>
-    </ul>
-    <a class="button" href="https://play.google.com/store/apps/details?id=com.camera.flash">Get it on Google Play</a>
+<section class="hero">
+  <video autoplay muted loop playsinline poster="assets/aperture.jpg" aria-hidden="true">
+    <source src="assets/promo-16x9.mp4" type="video/mp4">
+  </video>
+  <div class="hero-copy">
+    <p class="kicker">Manual camera for Android</p>
+    <h1>F64</h1>
+    <p class="lede">The sensor, not the software.</p>
+    <p class="sub">RAW DNG stills. Cinema Log and HLG video. Full manual ISO, shutter, focus, Kelvin. Named for the photographers who wanted the lens, not the retoucher.</p>
+    <a href="https://play.google.com/store/apps/details?id=com.camera.flash">
+      <img class="badge" src="assets/google-play-badge.png" alt="Get it on Google Play">
+    </a>
+    <p class="fine">Free · Android 10+ · Gallery may show ads</p>
   </div>
+</section>
 
-  <footer>
-    <p><a href="privacy.html">Privacy Policy</a> · <a href="mailto:santhoshg0004@gmail.com">santhoshg0004@gmail.com</a></p>
-    <p>© 2026 Santhosh G</p>
-  </footer>
-</main>
+<div class="pills">
+  <div>RAW DNG<span>when the sensor allows it</span></div>
+  <div>Cinema Log / HLG<span>SDR, HDR, or grade-later log</span></div>
+  <div>Manual + auto<span>ISO, shutter, focus, Kelvin</span></div>
+  <div>Any Android 10+<span>not Pixel- and Samsung-only</span></div>
+</div>
+
+<section>
+  <div class="wrap why">
+    <h2>Your phone already has a serious camera.</h2>
+    <p>The stock app hides it behind beauty filters, extra sharpening, and HDR the sensor never asked for. F64 talks to the hardware through Camera2 so you get the raw file, the real exposure, and cinema-style video — then you decide.</p>
+  </div>
+  <div class="wrap features">
+    <article class="card">
+      <h3>Photos from the sensor</h3>
+      <p>RAW DNG, DNG+JPEG, or JPEG per shot. Full-sensor 4:3 or 16:9, labelled with the real resolution. No RAW on this camera? F64 falls back to a low-processing JPEG with noise reduction and sharpening off.</p>
+    </article>
+    <article class="card">
+      <h3>Cinema on the rest of Android</h3>
+      <p>The same ISO, shutter, focus, and white balance for video. Profiles: standard SDR, HLG HDR, and an S-Log3-style log curve where the encoder allows it. 24 / 25 / 30 / 60 fps — the REC bar shows the rate the file actually has.</p>
+    </article>
+    <article class="card">
+      <h3>A viewfinder that is a camera</h3>
+      <p>Manual ISO and shutter. Tap-to-focus or a focus distance slider. White balance presets plus Kelvin. Flash, torch, grid, zoom dial, front and back. What you set is what the request sends.</p>
+    </article>
+    <article class="card">
+      <h3>Auto that prefers grain over blur</h3>
+      <p>Auto stills meter the scene and keep shutter inside a gyro-measured blur budget. Handheld night shots take controlled grain instead of smear. No beauty filter. No extra sharpening.</p>
+    </article>
+  </div>
+</section>
+
+<section>
+  <div class="wrap shots-head">
+    <h2>The camera, on the phone.</h2>
+  </div>
+  <div class="wrap shots-row">
+    <img src="assets/screen-01.jpg" alt="F64 RAW DNG capture">
+    <img src="assets/screen-02.jpg" alt="F64 sensor format picker">
+    <img src="assets/screen-03.jpg" alt="F64 cinema video viewfinder">
+    <img src="assets/screen-04.jpg" alt="F64 SDR HLG Log profiles">
+    <img src="assets/screen-05.jpg" alt="F64 in-app gallery">
+    <img src="assets/screen-06.jpg" alt="F64 clip review">
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Questions</h2>
+    <div style="margin-top:28px">
+      <details open>
+        <summary>Does it shoot true RAW?</summary>
+        <p>Yes, as DNG from Camera2 <code>RAW_SENSOR</code> when that camera advertises it. Many flagships and mid-range phones do; many budget phones do not. F64 checks at runtime and falls back instead of crashing.</p>
+      </details>
+      <details>
+        <summary>Is this only for Pixel and Samsung?</summary>
+        <p>No. Blackmagic Camera is excellent and limited to those brands. F64 is built for the rest of the Android fleet — Realme, Xiaomi, OnePlus, Nothing, Motorola, and anything else on Android 10+ with a Camera2 HAL.</p>
+      </details>
+      <details>
+        <summary>Where do the files go?</summary>
+        <p>Photos land in DCIM/F64, videos in Movies/F64. No account. Nothing is uploaded by the app.</p>
+      </details>
+      <details>
+        <summary>Are there ads?</summary>
+        <p>The app is free. The in-app gallery may show ads. Capture itself is not an ad surface.</p>
+      </details>
+      <details>
+        <summary>What does F64 mean?</summary>
+        <p>f/64 is the small aperture that Group f/64 used as a manifesto: sharp, unmanipulated photographs. The app is named for that idea, not affiliated with the historical group.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <h2>Unlock the camera you already own.</h2>
+  <p>Free on Google Play. Android 10 or newer.</p>
+  <a href="https://play.google.com/store/apps/details?id=com.camera.flash">
+    <img class="badge" src="assets/google-play-badge.png" alt="Get it on Google Play">
+  </a>
+</section>
+
+<footer>
+  <span>© 2026 Santhosh G</span>
+  <span>
+    <a href="privacy.html">Privacy</a>
+    ·
+    <a href="mailto:santhoshg0004@gmail.com">santhoshg0004@gmail.com</a>
+    ·
+    <a href="https://play.google.com/store/apps/details?id=com.camera.flash">Google Play</a>
+  </span>
+</footer>
 </body>
 </html>
